@@ -1,19 +1,26 @@
 const model = require("../models/todo");
+const user = require("../middlewares/auth");
 
 getAllTodos = async (req,res) => {
     const todoItems = await model.getAll();
     res.send(todoItems);
 }
 
+getAllTodosByUserId = async (req,res) => {
+    const userId = req.params.userId;
+    const todoItems = await model.getAllItemsById(userId);
+    if(req.user.id === todoItems[0].usersId){
+        res.send(todoItems);
+    } else {
+       res.send("unauthorized")
+    }
+    
+}
+
 getTodo = async (req,res) => {
     const id = req.params.id;
     const todoItem = await model.getItemById(id);
-    if(req.user.id === todoItem.usersId){
-        res.send(todoItem);
-        
-    } else{
-        res.sendStatus(401);
-    }
+        res.send(todoItem);  
 }
 
 createTodo = async (req,res) => {
@@ -50,4 +57,4 @@ uncheckTodo = async (req, res) => {
     res.send(uncheckedTodo);
 }
 
-module.exports = {getAllTodos, getTodo, createTodo, updateTodo, deleteTodo, checkTodo, uncheckTodo }
+module.exports = {getAllTodos, getTodo, createTodo, updateTodo, deleteTodo, checkTodo, uncheckTodo, getAllTodosByUserId}

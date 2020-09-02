@@ -24,5 +24,6 @@
     "jsonwebtoken": "^8.5.1",
     "nedb": "^1.8.0",
     "nodemon": "^2.0.4"
-  }
+  },
+  "devDependencies": {}
 }

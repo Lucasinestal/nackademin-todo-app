@@ -12,6 +12,18 @@ getAll = () => {
     })
 }
 
+getAllItemsById = (userId) => {
+    return new Promise ((resolve, reject) => {
+        db.find({usersId: userId}, function (err, docs){
+            if(err) {
+                reject(err);
+            } else {
+                resolve(docs)
+            }
+        })
+    })
+}
+
 getItemById = (id) => {
     return new Promise ((resolve, reject) => {
         db.findOne({ _id: id }, function (err, docs) {
@@ -27,6 +39,7 @@ getItemById = (id) => {
 createItem = (newTodo) => {
     return new Promise ((resolve, reject) => {
         db.insert(newTodo, function (err, docs){
+            console.log(newTodo)
             if(err){
                 reject(err);
             } else{
@@ -91,4 +104,4 @@ uncheckItem = (id) => {
 }
 
 
-module.exports = { getAll, getItemById, createItem, updateItem, deleteItem, checkItem, uncheckItem }
+module.exports = { getAll, getItemById, createItem, updateItem, deleteItem, checkItem, uncheckItem, getAllItemsById }

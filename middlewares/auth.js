@@ -7,12 +7,9 @@ auth =  async (req, res, next) =>  {
     if( ! req.headers.authorization ){
         return res.sendStatus(403);
     } else {
-        
         const payload = req.headers.authorization.replace("Bearer ", "");
-        console.log("crypted payload:" + payload);
         try{
             req.user = jwt.verify(payload, process.env.SECRET)
-            console.log(req.user.role);
             next()
         } catch (err){
             res.sendStatus(403);
@@ -22,4 +19,23 @@ auth =  async (req, res, next) =>  {
 
 }
 
-module.exports = {auth}
+user = async (req, res, next) => {
+    console.log(req.user);
+    if(req.user.role === "user" || req.user.role === "admin"){
+         next();
+    } else {
+        res.sendStatus(401);
+    }
+}
+
+admin = async (req, res, next) => {
+    console.log(req.user);
+    if(req.user.role === "admin"){
+         next();
+    } else {
+        res.sendStatus(401);
+    }
+}
+    
+
+module.exports = {auth, user, admin}
