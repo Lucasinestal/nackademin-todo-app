@@ -30,7 +30,7 @@ router.get('/users', jsonParser,authenticate.auth, usersController.getAllUsers);
 
 router.get('/users/:id', jsonParser,authenticate.auth, usersController.getUser);
 
-router.post('/users/create', jsonParser, usersController.createUser);
+router.post('/users/create', jsonParser,authenticate.auth, authenticate.admin, usersController.createUser);
 
 router.patch('/users/edit/:id', jsonParser,authenticate.auth, authenticate.user, usersController.updateUser);
 
@@ -41,3 +41,9 @@ router.delete('/users/delete/:id', jsonParser,authenticate.auth, authenticate.ad
 router.post('/auth', jsonParser, usersController.loginUser);
 
 module.exports = router
+
+
+ /*{
+    "email": "admin@admino.se",
+    "password": "secreto"
+} */
