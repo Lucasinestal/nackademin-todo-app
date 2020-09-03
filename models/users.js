@@ -1,10 +1,13 @@
-const Datastore = require('nedb'), db = new Datastore({ filename: 'users.db', autoload: true});
+//const Datastore = require('nedb'), db = new Datastore({ filename: 'users.db', autoload: true});
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const db = require("../database");
+
+
 
 getAll = () => {
     return new Promise ((resolve, reject) => {
-        db.find({}, function(err, docs){
+        db.users.find({}, function(err, docs){
             if(err){
                 reject(err)
             } else {
@@ -16,7 +19,7 @@ getAll = () => {
 
 getUserById = (id) => {
     return new Promise ((resolve, reject) => {
-        db.findOne({ _id: id }, function (err, docs) {
+        db.users.findOne({ _id: id }, function (err, docs) {
             if (err) {
                 reject(err);
             } else {
@@ -30,7 +33,7 @@ createUser = (newUser) => {
     return new Promise ((resolve, reject) => {
         const hash = bcrypt.hashSync(newUser.password, 10)
         newUser.password = hash;
-        db.insert(newUser, function (err, docs){
+        db.users.insert(newUser, function (err, docs){
             if(err){
                 reject(err);
             } else{
@@ -42,11 +45,11 @@ createUser = (newUser) => {
 
 updateUser = (id, body) => {
     return new Promise ((resolve, reject) => {
-        db.update({ _id: id }, { $set: { title: body.title, done: true, usersId: body.userId } }, { multi: true }, function (err, numReplaced) {
+        db.users.update({ _id: id }, { $set: { email: body.email, role: body.role} }, { multi: true }, function (err, numReplaced) {
             if (err) {
                 reject(err);
             } else {
-                db.find({ _id: id }, function (err, docs) {
+                db.users.find({ _id: id }, function (err, docs) {
                     resolve(docs);
                 });
             }
@@ -56,7 +59,7 @@ updateUser = (id, body) => {
 
 deleteUser = (id) => {
     return new Promise ((resolve, reject) => {
-        db.remove({ _id: id }, function (err, numDeleted){
+        db.users.remove({ _id: id }, function (err, numDeleted){
             if (err){
                 reject(err)
             } else {
@@ -70,7 +73,7 @@ deleteUser = (id) => {
 
 loginUser = (loginAttempt) => {
     return new Promise ((resolve, reject) => {
-        db.findOne({ email: loginAttempt.email }, function (err, docs) {
+        db.users.findOne({ email: loginAttempt.email }, function (err, docs) {
             if (err) {
                 reject(err);
             } else {
@@ -92,4 +95,13 @@ loginUser = (loginAttempt) => {
     })
 }
 
-module.exports = { getAll, getUserById, createUser, updateUser, deleteUser, loginUser }
+
+clearDatabase = () => {
+    return new Promise ((resolve, reject) => {
+        db.users.remove({},{multi: true}, function (err, numDeleted){
+            resolve(numDeleted);
+        });
+
+    })
+}
+module.exports = { getAll, getUserById, createUser, updateUser, deleteUser, loginUser, clearDatabase }

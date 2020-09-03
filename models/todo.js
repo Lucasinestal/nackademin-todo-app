@@ -1,8 +1,9 @@
-const Datastore = require('nedb'), db = new Datastore({ filename: 'todos.db', autoload: true});
+//const Datastore = require('nedb'), db = new Datastore({ filename: 'todos.db', autoload: true});
+const db = require("../database");
 
 getAll = () => {
     return new Promise ((resolve, reject) => {
-        db.find({}, function(err, docs){
+        db.todos.find({}, function(err, docs){
             if(err){
                 reject(err)
             } else {
@@ -14,7 +15,7 @@ getAll = () => {
 
 getAllItemsById = (userId) => {
     return new Promise ((resolve, reject) => {
-        db.find({usersId: userId}, function (err, docs){
+        db.todos.find({usersId: userId}, function (err, docs){
             if(err) {
                 reject(err);
             } else {
@@ -26,7 +27,7 @@ getAllItemsById = (userId) => {
 
 getItemById = (id) => {
     return new Promise ((resolve, reject) => {
-        db.findOne({ _id: id }, function (err, docs) {
+        db.todos.findOne({ _id: id }, function (err, docs) {
             if (err) {
                 reject(err);
             } else {
@@ -38,7 +39,7 @@ getItemById = (id) => {
 
 createItem = (newTodo) => {
     return new Promise ((resolve, reject) => {
-        db.insert(newTodo, function (err, docs){
+        db.todos.insert(newTodo, function (err, docs){
             console.log(newTodo)
             if(err){
                 reject(err);
@@ -51,7 +52,7 @@ createItem = (newTodo) => {
 
 updateItem = (id, body) => {
     return new Promise ((resolve, reject) => {
-        db.update({ _id: id }, { $set: { title: body.title, done: true } }, { multi: true }, function (err, numReplaced) {
+        db.todos.update({ _id: id }, { $set: { title: body.title, done: true } }, { multi: true }, function (err, numReplaced) {
             if (err) {
                 reject(err);
             } else {
@@ -65,7 +66,7 @@ updateItem = (id, body) => {
 
 deleteItem = (id) => {
     return new Promise ((resolve, reject) => {
-        db.remove({ _id: id }, function (err, numDeleted){
+        db.todos.remove({ _id: id }, function (err, numDeleted){
             if (err){
                 reject(err)
             } else {
@@ -77,7 +78,7 @@ deleteItem = (id) => {
 
 checkItem = (id) => {
     return new Promise ((resolve, reject) => {
-        db.update({ _id: id }, { $set: { done: true } },  function (err, numReplaced){
+        db.todos.update({ _id: id }, { $set: { done: true } },  function (err, numReplaced){
             if(err){
                 reject(err);
             } else{
@@ -91,7 +92,7 @@ checkItem = (id) => {
 
 uncheckItem = (id) => {
     return new Promise ((resolve, reject) => {
-        db.update({_id: id},{ $set: { done: false} }, function (err, numReplaced){
+        db.todos.update({_id: id},{ $set: { done: false} }, function (err, numReplaced){
             if(err){
                 reject(err);
             } else{

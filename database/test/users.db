@@ -1,0 +1,9 @@
+{"email":"jala@ala.se","password":"$2a$10$xr/tRnPhw2C9x2a0NGgVtucWxMF72O.xoxXVHEkUjoS6TJzwyAVDq","role":"user","_id":"ldT93ImdrSIzzOyg"}
+{"email":"user@user.se","password":"$2a$10$sbFnszTPPvoyQJy0WoLx4OKga4eNAzm8iLiGQ3R0Iw6JQWHYKFqDu","role":"user","_id":"HCvkRPsWpyu8Ewyo"}
+{"email":"admin@admin.se","password":"$2a$10$CKgVArXNVdF1yZGRpLNiYuSbovj9D8eEk.Dp1ie61dopMBBdqFwu2","role":"admin","_id":"5IYvXOJG7GbERFuG"}
+{"email":"lol@lol.se","password":"$2a$10$CKgVArXNVdF1yZGRpLNiYuSbovj9D8eEk.Dp1ie61dopMBBdqFwu2","role":"user","_id":"5IYvXOJG7GbERFuG"}
+{"email":"admin@admin.se","password":"$2a$10$fW6Z1avGpdORqyVwdHJ1gevHS.RvSfM89XrLNZo7avvzwaUPbr.XO","role":"admin","_id":"1zBHDgRXFrAvpD9G"}
+{"$$deleted":true,"_id":"1zBHDgRXFrAvpD9G"}
+{"$$deleted":true,"_id":"5IYvXOJG7GbERFuG"}
+{"$$deleted":true,"_id":"HCvkRPsWpyu8Ewyo"}
+{"$$deleted":true,"_id":"ldT93ImdrSIzzOyg"}

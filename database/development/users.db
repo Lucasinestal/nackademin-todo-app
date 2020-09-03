@@ -10,3 +10,4 @@
 {"email":"user@mailer.se","password":"$2a$10$OAxnIkNKZYE/WV3lm694JeaZR1EMt.M2eElTeyQA/HjBLsuwJwbKS","role":"admin","_id":"aEh28hyFtCUnDz17"}
 {"email":"jalla@gmail.com","password":"$2a$10$F43a6bSKdQwbogT57esx7uGQ0.dUzL/UbQTV8pzvuMMKQtJiPWX8S","role":"admin","_id":"f1iP74GuDtTKWabR"}
 {"email":"admin@mail.se","password":"secret","role":"user","_id":"wEKsGuRKPVxJArlb"}
+{"email":"admin@admino.se","password":"$2a$10$DcE7CJlGYXYzS4h8wkS2NuaXK6ga/Cjap9mxEXWa9pu4iRz8yrOKC","role":"admin","_id":"n9qk2pdHn7tcnSXO"}
