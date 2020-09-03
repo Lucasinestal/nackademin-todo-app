@@ -12,9 +12,8 @@ getAllTodosByUserId = async (req,res) => {
     if(req.user.id === todoItems[0].usersId){
         res.send(todoItems);
     } else {
-       res.send("unauthorized")
+       res.sendStatus(401)
     }
-    
 }
 
 getTodo = async (req,res) => {
