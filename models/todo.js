@@ -40,7 +40,6 @@ getItemById = (id) => {
 createItem = (newTodo) => {
     return new Promise ((resolve, reject) => {
         db.todos.insert(newTodo, function (err, docs){
-            console.log(newTodo)
             if(err){
                 reject(err);
             } else{
@@ -82,7 +81,7 @@ checkItem = (id) => {
             if(err){
                 reject(err);
             } else{
-                db.find({_id: id}, function (err, docs){
+                db.todos.find({_id: id}, function (err, docs){
                     resolve(docs);
                 })
             }
@@ -104,5 +103,14 @@ uncheckItem = (id) => {
     })
 }
 
+clearDatabase = () => {
+    return new Promise ((resolve, reject) => {
+        db.todos.remove({},{multi: true}, function (err, numDeleted){
+            resolve(numDeleted);
+        });
 
-module.exports = { getAll, getItemById, createItem, updateItem, deleteItem, checkItem, uncheckItem, getAllItemsById }
+    })
+}
+
+
+module.exports = { getAll, getItemById, createItem, updateItem, deleteItem, checkItem, uncheckItem, getAllItemsById, clearDatabase }

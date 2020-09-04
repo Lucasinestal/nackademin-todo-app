@@ -1,11 +1,12 @@
 const chai = require("chai");
 chai.should();
 const User = require("../../models/users");
-const { user } = require("../../middlewares/auth");
+
+
 
 describe("Unit test for users", function(){
 
-     after( async () => {
+     afterEach( async () => {
         await User.clearDatabase()
     })
 
@@ -16,15 +17,19 @@ describe("Unit test for users", function(){
     })
 
     it("login a user", async () => {
-        const success = await User.loginUser({email:"jala@ala.se", password:"hejsanhopsan"})
-        success.should.be.a("object");
-        success.should.have.keys("token");
+        pw = "hemligt"
+        const createdUser = await User.createUser({email:"luc@test.se", password:pw})
+        const success = await User.loginUser({email:createdUser.email, password:pw})
+        success.should.be.a("string");
     })
 
     it("get all users", async () => {
+        await User.createUser({email:"luc@test.se", password:"hemligt"})
+        await User.createUser({email:"luc@test.se", password:"hemligt"})
+        await User.createUser({email:"luc@test.se", password:"hemligt"})
         const users = await User.getAll()
         users.should.be.a("array");
-        users.should.have.keys("0")
+        users.should.have.keys("0", "1", "2")
     })
 
     it("get user by ID", async () => {

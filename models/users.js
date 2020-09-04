@@ -83,9 +83,8 @@ loginUser = (loginAttempt) => {
                         id: docs._id,
                         email: docs.email,
                         role: docs.role
-                    }, process.env.SECRET, {expiresIn: "1h"} )
-                    console.log(process.env.SECRET);
-                    resolve({token});
+                    }, process.env.SECRET, {expiresIn: "1h"});
+                    resolve(token);
                 } else {
                     let failed = "Wrong password!";
                     resolve(failed);
