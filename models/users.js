@@ -1,4 +1,4 @@
-//const Datastore = require('nedb'), db = new Datastore({ filename: 'users.db', autoload: true});
+//const Datastore = require('nedb'), db = new Datastore({ filename: '../database/test/users.db', autoload: true});
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const db = require("../database");
@@ -75,6 +75,7 @@ loginUser = (loginAttempt) => {
     return new Promise ((resolve, reject) => {
         db.users.findOne({ email: loginAttempt.email }, function (err, docs) {
             if (err) {
+                console.log(loginAttempt)
                 reject(err);
             } else {
                 const success = bcrypt.compareSync(loginAttempt.password, docs.password);
@@ -98,7 +99,12 @@ loginUser = (loginAttempt) => {
 clearDatabase = () => {
     return new Promise ((resolve, reject) => {
         db.users.remove({},{multi: true}, function (err, numDeleted){
-            resolve(numDeleted);
+            if(err){
+                reject(err)
+            }
+            else{
+                resolve(numDeleted);
+            }
         });
 
     })

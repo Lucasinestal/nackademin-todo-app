@@ -3,7 +3,6 @@ chai.should();
 const User = require("../../models/users");
 
 
-
 describe("Unit test for users", function(){
 
      afterEach( async () => {

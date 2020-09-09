@@ -12,6 +12,10 @@ switch (process.env.ENVIRONMENT) {
       filename: __dirname + "/development/users.db",
       autoload: true,
     });
+    db.todoLists = new Datastore({
+      filename: __dirname + "/development/todoLists.db",
+      autoload: true,
+    });
     break;
   case "test":
     db.todos = new Datastore({
@@ -20,6 +24,10 @@ switch (process.env.ENVIRONMENT) {
       });
       db.users = new Datastore({
         filename: __dirname + "/test/users.db",
+        autoload: true,
+      });
+      db.todoLists = new Datastore({
+        filename: __dirname + "/test/todoLists.db",
         autoload: true,
       });
     break;

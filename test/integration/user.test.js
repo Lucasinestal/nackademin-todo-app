@@ -1,21 +1,23 @@
+require("dotenv").config();
 const chai = require("chai");
 const chaihttp = require("chai-http");
 chai.use(chaihttp);
 const {expect, request} = chai;
 const app = require("../../app");
 const User = require("../../models/users");
-const testDB = require("../../database/test/users.db")
 
 
 describe("user integrations test", () => {
-    afterEach(async function(){
+    let token;
+    beforeEach(async function(){
         await User.clearDatabase()
         const user = await User.createUser({
             email:"integrationstest@gmail.com",
             password:"testing",
             role:"admin"
         })
-        const token = await User.loginUser({email:user.email, password:"testing"})
+        token = await User.loginUser({email:user.email, password:"testing"})
+        console.log(token)
     })  
     it("Should create new user", () => {
         const newUser = {
@@ -25,12 +27,14 @@ describe("user integrations test", () => {
         }
         request(app)
         .post("/users/create")
-        .set("Authorization", `Bearer ${this.token}`)
+        .set("Authorization", `Bearer ${token}`)
         .set("Content-Type", "application/json")
         .send(newUser)
         .end((err,res) => {
-            expect(res.body).to.be.a("object")
-            expect(res.body).to.have.keys(["_id", "email", "password", "role"])
+            console.log(res.body)
+            console.log(res.status)
+           expect(res.body).to.be.a("object")
+           expect(res.body).to.have.keys("_id", "email", "password", "role")
         })
     })
 })

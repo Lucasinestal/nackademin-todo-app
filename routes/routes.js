@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const todoController = require('../controllers/todo');
 const usersController = require('../controllers/users');
+const todoListsController = require("../controllers/todoList")
 const bodyParser = require('body-parser');
 const authenticate = require('../middlewares/auth')
 const jsonParser = bodyParser.json();
@@ -39,6 +40,19 @@ router.delete('/users/delete/:id', jsonParser,authenticate.auth, authenticate.ad
 // Auth routes
 
 router.post('/auth', jsonParser, usersController.loginUser);
+
+// todoLists routes
+
+router.get('/todoLists', jsonParser,authenticate.auth, todoListsController.getAllTodosLists);
+
+router.get('/todoLists/:id', jsonParser,authenticate.auth, todoListsController.getTodoListById);
+
+router.post('/todoLists/create', jsonParser,authenticate.auth, authenticate.admin, todoListsController.createTodoList);
+
+router.patch('/todoLists/edit/:id', jsonParser,authenticate.auth, authenticate.user, todoListsController.updateTodoList);
+
+router.delete('/todoLists/delete/:id', jsonParser,authenticate.auth, authenticate.admin, todoListsController.deleteTodoList);
+
 
 module.exports = router
 

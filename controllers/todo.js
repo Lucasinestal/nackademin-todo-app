@@ -26,7 +26,8 @@ createTodo = async (req,res) => {
     const newTodo = {
         title: req.body.title,
         done: false,
-        usersId: req.user.id
+        usersId: req.user.id,
+        todoListId: req.body.todoListId
     }
     const createdTodo = await model.createItem(newTodo);
     res.send(createdTodo);
