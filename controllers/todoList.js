@@ -7,6 +7,12 @@ getAllTodosLists = async (req,res) => {
     res.send(todoLists);
 }
 
+getAllTodoListsById = async(req,res) => {
+    const id = req.user.id;
+    const todoList = await model.getAllTodoListsById(id);
+    res.send(todoList);
+}
+
 getTodoListById = async (req,res) => {
     const userId = req.params.userId;
     const todoList = await model.getTodoListById(userId);
@@ -39,5 +45,11 @@ deleteTodoList = async (req, res) => {
     res.send("Todo with ID: " + id + " was succesfully deleted");
 }
 
+deleteAllTodoListsByUserId = async (req, res) => {
+    const id = req.user.id;
+    const deletedTodoLists = await model.deleteAllTodoListsByUserId(id);
+    res.send("All TodoLists with ID: " + id + " was successfully deleted");
+}
 
-module.exports = {getAllTodosLists, getTodoListById, createTodoList, updateTodoList, deleteTodoList}
+
+module.exports = {getAllTodosLists, getTodoListById, createTodoList, updateTodoList, deleteTodoList, getAllTodoListsById, deleteAllTodoListsByUserId}

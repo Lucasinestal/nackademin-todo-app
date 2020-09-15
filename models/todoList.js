@@ -14,6 +14,20 @@ getAllTodosLists = () => {
 }
 
 
+getAllTodoListsById = (id) => {
+    return new Promise ((resolve, reject) => {
+        db.todoLists.find({ usersId: id }, function (err, docs) {
+            console.log(id)
+            if (err) {
+                reject(err);
+            } else {
+                resolve(docs);
+            }
+        })
+    })
+}
+
+
 getTodoListById = (id) => {
     return new Promise ((resolve, reject) => {
         db.todoLists.findOne({ _id: id }, function (err, docs) {
@@ -60,10 +74,24 @@ deleteTodoList = (id) => {
                 reject(err)
             } else {
                 resolve(numDeleted)
+                console.log(numDeleted)
             }
         })
     })
 }
+
+deleteAllTodoListsByUserId = (id) => {
+    return new Promise ((resolve, reject) => {
+        db.todoLists.remove({usersId: id},  { multi: true }, function (err, numDeleted){
+            if(err){
+                reject(err)
+            } else{
+                resolve(numDeleted)
+            }
+        })
+    })
+}
+
 
 
 clearDatabase = () => {
@@ -76,4 +104,4 @@ clearDatabase = () => {
 }
 
 
-module.exports = { getAllTodosLists, getTodoListById, createTodoList, updateTodoList, deleteTodoList, clearDatabase }
+module.exports = { getAllTodosLists, getTodoListById, createTodoList, updateTodoList, deleteTodoList, clearDatabase, getAllTodoListsById, deleteAllTodoListsByUserId }

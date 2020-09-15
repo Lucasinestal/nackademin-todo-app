@@ -11,6 +11,7 @@ const { user } = require("../../middlewares/auth");
 
 describe("Todo List integrations test", () => {
     let token;
+    let todoList;
     beforeEach(async function(){
         await TodoList.clearDatabase();
         await User.clearDatabase();
@@ -19,7 +20,7 @@ describe("Todo List integrations test", () => {
             password:"testing",
             role:"admin"
         });
-        await TodoList.createTodoList({
+        todoList = await TodoList.createTodoList({
             title: "test integration",
             usersId: "wiugniwngwing"
         });
@@ -42,7 +43,6 @@ describe("Todo List integrations test", () => {
         .end((err,res) => {
            expect(res.body).to.be.a("object")
            expect(res.body).to.have.keys("_id", "title", "usersId")
-           //expect(res.status).to.have.statusCode(200)
         })
     })
     it("should get all todoLists", () => {
@@ -56,6 +56,19 @@ describe("Todo List integrations test", () => {
             console.log(res.status)
            expect(res.body).to.be.a("array")
            expect(res.body).to.have.keys("0","1")
+        })
     })
-})
+    it("should delete a todolist ", () => {
+        request (app)
+        .delete(`/todoLists/delete/${todoList._id}`)
+        .set("Authorization", `Bearer ${token}`)
+        .set("Content-Type", "application/json")
+        .send()
+        .end((err,res) => {
+            expect(res.status).to.be.a("number")
+            expect(res.body).to.be.a("object")
+            
+
+        })
+    })
 })

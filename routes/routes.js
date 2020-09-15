@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const todoController = require('../controllers/todo');
 const usersController = require('../controllers/users');
-const todoListsController = require("../controllers/todoList")
+const todoListsController = require("../controllers/todoList");
 const bodyParser = require('body-parser');
-const authenticate = require('../middlewares/auth')
+const authenticate = require('../middlewares/auth');
 const jsonParser = bodyParser.json();
+const gdprController = require('../controllers/gdpr');
 
 // todo routes
 
@@ -54,10 +55,14 @@ router.patch('/todoLists/edit/:id', jsonParser,authenticate.auth, authenticate.u
 router.delete('/todoLists/delete/:id', jsonParser,authenticate.auth, authenticate.admin, todoListsController.deleteTodoList);
 
 
+//Privacy policy / GDPR Routes
+
+router.get('/userpolicies', jsonParser, authenticate.auth, authenticate.user, gdprController.getPrivacyPolicy);
+
+router.get('/userinfo', jsonParser, authenticate.auth, authenticate.user, gdprController.getAllUserInfo);
+ 
+router.delete('/userinfo/delete', jsonParser, authenticate.auth, authenticate.user, gdprController.deleteAllUserInfo);
+
+
 module.exports = router
 
-
- /*{
-    "email": "admin@admino.se",
-    "password": "secreto"
-} */

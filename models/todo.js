@@ -75,6 +75,18 @@ deleteItem = (id) => {
     })
 }
 
+deleteAllTodosByUserId = (id) => {
+    return new Promise ((resolve, reject) => {
+        db.todos.remove({ usersId: id }, {multi: true}, function (err, numDeleted){
+            if (err){
+                reject(err)
+            } else {
+                resolve(numDeleted)
+            }
+        })
+    })
+}
+
 checkItem = (id) => {
     return new Promise ((resolve, reject) => {
         db.todos.update({ _id: id }, { $set: { done: true } },  function (err, numReplaced){
@@ -113,4 +125,4 @@ clearDatabase = () => {
 }
 
 
-module.exports = { getAll, getItemById, createItem, updateItem, deleteItem, checkItem, uncheckItem, getAllItemsById, clearDatabase }
+module.exports = { getAll, getItemById, createItem, updateItem, deleteItem, checkItem, uncheckItem, getAllItemsById, clearDatabase, deleteAllTodosByUserId }

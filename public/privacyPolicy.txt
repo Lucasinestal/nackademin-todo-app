@@ -1,0 +1,34 @@
+Integritetspolicy										
+
+Inledning										
+Vi bryr oss om din integritet bla bla										
+I denna sektion berättar vi hur vi hanterar dina personuppgifter när du använder våra tjänster, 										
+nedan omnämnt "applikationen".										
+Kontakta oss bla bla										
+
+Kakor (cookies)										
+Genom att godkänna 										
+
+
+
+Vad är personuppgifter?									Beslutat	
+Allt som direkt eller indirekt kan härledas till en fysisk person som är i livet 										
+omfattas av begreppet personuppgifter. Det handlar inte bara om namn och 										
+personnummer utan även om till exempel bilder och e-postadresser. 										
+
+Varför samlar vi in personuppgifter?										
+Så bra upplevelse som möjligt bla bla										
+
+
+Var och hur sparar vi dina personuppgifter?										
+Alla personuppgifter som anges i applikationen krypteras och lagras i vår egna databas när du skapar ett konto.										
+
+
+Var behandlar vi dina personuppgifter? 										
+För din säkerhet är ditt konto lösenordsskyddat så att ingen annan kan se dina inlägg. Det innebär att att ditt användarnamn 										
+är kopplat till ett lösenord i vår databas.										
+Det krypterade lösenordet läses på vår server och matchas mot ett användarnamn så att inloggningen kan beviljas.										
+
+Hur man tar bort eller tar ut sin data										
+För din säkerhet skickar vi aldrig persondata till externa platformar. Den information vi sparar kan när som helst ses under fliken "min data".										
+Den data vi sparar har ett utgångsdatum om 3652 dagar sedan senaste tillfället för inloggning men kan när som helst tas bort av dig som inloggad användare.

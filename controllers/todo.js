@@ -45,6 +45,13 @@ deleteTodo = async (req, res) => {
     const deletedTodo = await model.deleteItem(id);
     res.send("Todo with ID: " + id + " was succesfully deleted");
 }
+
+deleteAllTodosByUserId = async (req, res) => {
+    const id = req.user.id;
+    const deletedTodoitems = await model.deleteAllTodosByUserId(id);
+    res.send("All TodoLists with ID: " + id + " was successfully deleted");
+}
+
 checkTodo = async (req, res) => {
     const id = req.params.id;
     const checkedTodo = await model.checkItem(id)
@@ -57,4 +64,4 @@ uncheckTodo = async (req, res) => {
     res.send(uncheckedTodo);
 }
 
-module.exports = {getAllTodos, getTodo, createTodo, updateTodo, deleteTodo, checkTodo, uncheckTodo, getAllTodosByUserId}
+module.exports = {getAllTodos, getTodo, createTodo, updateTodo, deleteTodo, checkTodo, uncheckTodo, getAllTodosByUserId, deleteAllTodosByUserId}
