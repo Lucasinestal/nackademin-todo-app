@@ -34,6 +34,7 @@ createUser = (newUser) => {
         const hash = bcrypt.hashSync(newUser.password, 10)
         newUser.password = hash;
         console.log(newUser);
+        console.log(db.users)
         db.users.insert(newUser, function (err, docs){
             if(err){
                 reject(err);
