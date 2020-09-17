@@ -13,14 +13,14 @@ switch(process.env.ENVIRONMENT){
     case 'staging':
         mongoDatabase = {
             getUri: async () => 
-            `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
+            process.env.DB_CONNECTION
         }
         break;
 }
 
 async function connect(){
     
-    let uri = process.env.DB_CONNECTION;
+    let uri = await mongoDatabase.getUri();
 
     await mongoose.connect(uri, {
         useNewUrlParser: true,
