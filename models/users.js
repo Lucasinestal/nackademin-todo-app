@@ -1,7 +1,7 @@
 //const Datastore = require('nedb'), db = new Datastore({ filename: '../database/test/users.db', autoload: true});
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const db = require("../database/development");
+const db = require("../database");
 
 
 
