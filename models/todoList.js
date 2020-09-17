@@ -1,9 +1,17 @@
 const db = require("../database");
+const mongoose = require("mongoose");
+
+const todoListsSchema = new mongoose.Schema({
+    title: String,
+    usersId: String
+});
+
+const TodoLists = mongoose.model("TodoList", todoListsSchema);
 
 
 getAllTodosLists = () => {
     return new Promise ((resolve, reject) => {
-        db.todoLists.find({}, function(err, docs){
+        TodoLists.find({}, function(err, docs){
             if(err){
                 reject(err)
             } else {
@@ -16,8 +24,7 @@ getAllTodosLists = () => {
 
 getAllTodoListsById = (id) => {
     return new Promise ((resolve, reject) => {
-        db.todoLists.find({ usersId: id }, function (err, docs) {
-            console.log(id)
+        TodoLists.find({ usersId: id }, function (err, docs) {
             if (err) {
                 reject(err);
             } else {
@@ -30,7 +37,7 @@ getAllTodoListsById = (id) => {
 
 getTodoListById = (id) => {
     return new Promise ((resolve, reject) => {
-        db.todoLists.findOne({ _id: id }, function (err, docs) {
+        TodoLists.findById({ _id: id }, function (err, docs) {
             if (err) {
                 reject(err);
             } else {
@@ -42,8 +49,7 @@ getTodoListById = (id) => {
 
 createTodoList = (newTodoList) => {
     return new Promise ((resolve, reject) => {
-        console.log(newTodoList)
-        db.todoLists.insert(newTodoList, function (err, docs){
+        TodoLists.create(newTodoList, function (err, docs){
             if(err){
                 reject(err);
             } else{
@@ -55,7 +61,7 @@ createTodoList = (newTodoList) => {
 
 updateTodoList = (id, body) => {
     return new Promise ((resolve, reject) => {
-        db.todoLists.update({ _id: id }, { $set: { title: title } }, { multi: true }, function (err, numReplaced) {
+        TodoLists.updateOne({ _id: id }, { $set: { title: title } }, { multi: true }, function (err, numReplaced) {
             if (err) {
                 reject(err);
             } else {
@@ -69,12 +75,11 @@ updateTodoList = (id, body) => {
 
 deleteTodoList = (id) => {
     return new Promise ((resolve, reject) => {
-        db.todoLists.remove({ _id: id }, function (err, numDeleted){
+        TodoLists.deleteOne({ _id: id }, function (err, numDeleted){
             if (err){
                 reject(err)
             } else {
                 resolve(numDeleted)
-                console.log(numDeleted)
             }
         })
     })
@@ -82,7 +87,7 @@ deleteTodoList = (id) => {
 
 deleteAllTodoListsByUserId = (id) => {
     return new Promise ((resolve, reject) => {
-        db.todoLists.remove({usersId: id},  { multi: true }, function (err, numDeleted){
+        TodoLists.deleteMany({usersId: id},  { multi: true }, function (err, numDeleted){
             if(err){
                 reject(err)
             } else{
@@ -96,7 +101,7 @@ deleteAllTodoListsByUserId = (id) => {
 
 clearDatabase = () => {
     return new Promise ((resolve, reject) => {
-        db.todoLists.remove({},{multi: true}, function (err, numDeleted){
+        TodoLists.deleteMany({},{multi: true}, function (err, numDeleted){
             resolve(numDeleted);
         });
 

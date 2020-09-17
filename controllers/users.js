@@ -11,6 +11,7 @@ getUser = async (req,res) => {
     res.send(user);
 }
 
+
 createUser = async (req,res) => {
     const newUser = {
         email: req.body.email,

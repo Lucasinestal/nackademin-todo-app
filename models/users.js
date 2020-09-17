@@ -2,12 +2,21 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const db = require("../database");
+const mongoose = require("mongoose");
+require('dotenv').config();
 
+const usersSchema = new mongoose.Schema({
+    email: String,
+    password: String,
+    role: String
+});
+
+const Users = mongoose.model("Users", usersSchema);
 
 
 getAll = () => {
     return new Promise ((resolve, reject) => {
-        db.users.find({}, function(err, docs){
+        Users.find({}, function(err, docs){
             if(err){
                 reject(err)
             } else {
@@ -19,7 +28,7 @@ getAll = () => {
 
 getUserById = (id) => {
     return new Promise ((resolve, reject) => {
-        db.users.findOne({ _id: id }, function (err, docs) {
+        Users.findById({ _id: id }, function (err, docs) {
             if (err) {
                 reject(err);
             } else {
@@ -34,8 +43,7 @@ createUser = (newUser) => {
         const hash = bcrypt.hashSync(newUser.password, 10)
         newUser.password = hash;
         console.log(newUser);
-        console.log(db.users)
-        db.users.insert(newUser, function (err, docs){
+        Users.create(newUser, function (err, docs){
             if(err){
                 reject(err);
             } else{
@@ -47,11 +55,11 @@ createUser = (newUser) => {
 
 updateUser = (id, body) => {
     return new Promise ((resolve, reject) => {
-        db.users.update({ _id: id }, { $set: { email: body.email, role: body.role} }, { multi: true }, function (err, numReplaced) {
+        Users.updateOne({ _id: id }, { $set: { email: body.email, role: body.role} }, { multi: true }, function (err, numReplaced) {
             if (err) {
                 reject(err);
             } else {
-                db.users.find({ _id: id }, function (err, docs) {
+                Users.find({ _id: id }, function (err, docs) {
                     resolve(docs);
                 });
             }
@@ -61,7 +69,7 @@ updateUser = (id, body) => {
 
 deleteUser = (id) => {
     return new Promise ((resolve, reject) => {
-        db.users.remove({ _id: id }, function (err, numDeleted){
+        Users.deleteOne({ _id: id }, function (err, numDeleted){
             if (err){
                 reject(err)
             } else {
@@ -75,7 +83,7 @@ deleteUser = (id) => {
 
 loginUser = (loginAttempt) => {
     return new Promise ((resolve, reject) => {
-        db.users.findOne({ email: loginAttempt.email }, function (err, docs) {
+        Users.findOne({ email: loginAttempt.email }, function (err, docs) {
             if (err) {
                 console.log(loginAttempt)
                 reject(err);
@@ -100,7 +108,7 @@ loginUser = (loginAttempt) => {
 
 clearDatabase = () => {
     return new Promise ((resolve, reject) => {
-        db.users.remove({},{multi: true}, function (err, numDeleted){
+        Users.deleteMany({},{multi: true}, function (err, numDeleted){
             if(err){
                 reject(err)
             }

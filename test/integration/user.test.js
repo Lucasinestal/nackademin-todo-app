@@ -5,9 +5,19 @@ chai.use(chaihttp);
 const {expect, request} = chai;
 const app = require("../../app");
 const User = require("../../models/users");
+const Database = require("../../database/index")
 
 
 describe("user integrations test", () => {
+
+    before( async () => {
+        await Database.connect()
+    })
+
+    after( async () => {
+        await Database.disconnect()
+    })
+
     let token;
     beforeEach(async function(){
         await User.clearDatabase()

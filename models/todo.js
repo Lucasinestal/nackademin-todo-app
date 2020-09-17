@@ -1,9 +1,19 @@
 //const Datastore = require('nedb'), db = new Datastore({ filename: 'todos.db', autoload: true});
 const db = require("../database");
+const mongoose = require("mongoose");
+
+const todoSchema = new mongoose.Schema({
+        title: String,
+        done: Boolean,
+        usersId: String,
+        todoListId: String
+});
+
+const Todo = mongoose.model("Todo", todoSchema)
 
 getAll = () => {
     return new Promise ((resolve, reject) => {
-        db.todos.find({}, function(err, docs){
+        Todo.find({}, function(err, docs){
             if(err){
                 reject(err)
             } else {
@@ -15,7 +25,7 @@ getAll = () => {
 
 getAllItemsById = (userId) => {
     return new Promise ((resolve, reject) => {
-        db.todos.find({usersId: userId}, function (err, docs){
+        Todo.find({usersId: userId}, function (err, docs){
             if(err) {
                 reject(err);
             } else {
@@ -27,7 +37,7 @@ getAllItemsById = (userId) => {
 
 getItemById = (id) => {
     return new Promise ((resolve, reject) => {
-        db.todos.findOne({ _id: id }, function (err, docs) {
+        Todo.findById({ _id: id }, function (err, docs) {
             if (err) {
                 reject(err);
             } else {
@@ -39,7 +49,7 @@ getItemById = (id) => {
 
 createItem = (newTodo) => {
     return new Promise ((resolve, reject) => {
-        db.todos.insert(newTodo, function (err, docs){
+        Todo.create(newTodo, function (err, docs){
             if(err){
                 reject(err);
             } else{
@@ -51,7 +61,7 @@ createItem = (newTodo) => {
 
 updateItem = (id, body) => {
     return new Promise ((resolve, reject) => {
-        db.todos.update({ _id: id }, { $set: { title: body.title, done: true } }, { multi: true }, function (err, numReplaced) {
+        Todo.updateOne({ _id: id }, { $set: { title: body.title, done: true } }, { multi: true }, function (err, numReplaced) {
             if (err) {
                 reject(err);
             } else {
@@ -65,7 +75,7 @@ updateItem = (id, body) => {
 
 deleteItem = (id) => {
     return new Promise ((resolve, reject) => {
-        db.todos.remove({ _id: id }, function (err, numDeleted){
+        Todo.deleteOne({ _id: id }, function (err, numDeleted){
             if (err){
                 reject(err)
             } else {
@@ -77,7 +87,7 @@ deleteItem = (id) => {
 
 deleteAllTodosByUserId = (id) => {
     return new Promise ((resolve, reject) => {
-        db.todos.remove({ usersId: id }, {multi: true}, function (err, numDeleted){
+        Todo.deleteMany({ usersId: id }, {multi: true}, function (err, numDeleted){
             if (err){
                 reject(err)
             } else {
@@ -89,11 +99,11 @@ deleteAllTodosByUserId = (id) => {
 
 checkItem = (id) => {
     return new Promise ((resolve, reject) => {
-        db.todos.update({ _id: id }, { $set: { done: true } },  function (err, numReplaced){
+        Todo.updateOne({ _id: id }, { $set: { done: true } },  function (err, numReplaced){
             if(err){
                 reject(err);
             } else{
-                db.todos.find({_id: id}, function (err, docs){
+                Todo.findById({_id: id}, function (err, docs){
                     resolve(docs);
                 })
             }
@@ -103,11 +113,11 @@ checkItem = (id) => {
 
 uncheckItem = (id) => {
     return new Promise ((resolve, reject) => {
-        db.todos.update({_id: id},{ $set: { done: false} }, function (err, numReplaced){
+        Todo.updateOne({_id: id},{ $set: { done: false} }, function (err, numReplaced){
             if(err){
                 reject(err);
             } else{
-                db.find({_id: id}, function (err, docs){
+                Todo.findById({_id: id}, function (err, docs){
                     resolve(docs);
                 })
             }
@@ -117,7 +127,7 @@ uncheckItem = (id) => {
 
 clearDatabase = () => {
     return new Promise ((resolve, reject) => {
-        db.todos.remove({},{multi: true}, function (err, numDeleted){
+        Todo.deleteMany({},{multi: true}, function (err, numDeleted){
             resolve(numDeleted);
         });
 

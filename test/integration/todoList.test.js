@@ -7,9 +7,18 @@ const app = require("../../app");
 const User = require("../../models/users");
 const TodoList = require("../../models/todoList");
 const { user } = require("../../middlewares/auth");
+const Database = require("../../database/index")
 
 
 describe("Todo List integrations test", () => {
+
+    before( async () => {
+        await Database.connect()
+    })
+
+    after( async () => {
+        await Database.disconnect()
+    })
     let token;
     let todoList;
     beforeEach(async function(){
@@ -42,7 +51,7 @@ describe("Todo List integrations test", () => {
         .send(todoList)
         .end((err,res) => {
            expect(res.body).to.be.a("object")
-           expect(res.body).to.have.keys("_id", "title", "usersId")
+           expect(res.body).to.have.keys("__v","_id", "title", "usersId")
         })
     })
     it("should get all todoLists", () => {
