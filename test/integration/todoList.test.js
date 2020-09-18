@@ -39,45 +39,35 @@ describe("Todo List integrations test", () => {
         });
         token = await User.loginUser({email:user.email, password:"testing"});
     })  
-    it("Should create new todoList", () => {
+   it("Should create new todoList", async () => {
         const todoList = {
             title: "Integrations test creating TodoList",
             usersId: user._Id
         }
-        request(app)
-        .post("/todoLists/create")
-        .set("Authorization", `Bearer ${token}`)
-        .set("Content-Type", "application/json")
-        .send(todoList)
-        .end((err,res) => {
-           expect(res.body).to.be.a("object")
-           expect(res.body).to.have.keys("__v","_id", "title", "usersId")
-        })
+        const res = await request(app)
+            .post("/todoLists/create")
+            .set("Authorization", `Bearer ${token}`)
+            .set("Content-Type", "application/json")
+            .send(todoList)
+                expect(res.body).to.be.a("object")
+                expect(res.body).to.have.keys("__v","_id", "title", "usersId")
     })
-    it("should get all todoLists", () => {
-        request(app)
+    it("should get all todoLists", async () => {
+        const res = await request(app)
         .get("/todoLists")
         .set("Authorization", `Bearer ${token}`)
         .set("Content-Type", "application/json")
         .send()
-        .end((err,res) => {
-            console.log(res.body)
-            console.log(res.status)
            expect(res.body).to.be.a("array")
            expect(res.body).to.have.keys("0","1")
-        })
     })
-    it("should delete a todolist ", () => {
-        request (app)
+    it("should delete a todolist ", async () => {
+        const res = await request (app)
         .delete(`/todoLists/delete/${todoList._id}`)
         .set("Authorization", `Bearer ${token}`)
         .set("Content-Type", "application/json")
         .send()
-        .end((err,res) => {
             expect(res.status).to.be.a("number")
             expect(res.body).to.be.a("object")
-            
-
         })
-    })
 })

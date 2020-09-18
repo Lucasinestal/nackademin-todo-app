@@ -32,7 +32,7 @@ async function connect(){
 
 async function disconnect(){
     if(process.env.ENVIRONMENT == 'test' || process.env.ENVIRONMENT == 'development'){
-        await mongoDatabase.stop()
+       // await mongoDatabase.stop()
     }
     await mongoose.disconnect()
 }

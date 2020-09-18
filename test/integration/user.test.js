@@ -27,24 +27,19 @@ describe("user integrations test", () => {
             role:"admin"
         })
         token = await User.loginUser({email:user.email, password:"testing"})
-        console.log(token)
     })  
-    it("Should create new user", () => {
+    it("Should create new user", async () => {
         const newUser = {
             email:"new@user.se",
             password:"testing",
             role:"admin"
         }
-        request(app)
+        const res = await request(app)
         .post("/users/create")
         .set("Authorization", `Bearer ${token}`)
         .set("Content-Type", "application/json")
         .send(newUser)
-        .end((err,res) => {
-            console.log(res.body)
-            console.log(res.status)
            expect(res.body).to.be.a("object")
-           expect(res.body).to.have.keys("_id", "email", "password", "role")
-        })
+           expect(res.body).to.have.keys("__v", "_id", "email", "password", "role")
     })
 })

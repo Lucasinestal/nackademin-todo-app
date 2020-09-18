@@ -42,7 +42,6 @@ createUser = (newUser) => {
     return new Promise ((resolve, reject) => {
         const hash = bcrypt.hashSync(newUser.password, 10)
         newUser.password = hash;
-        console.log(newUser);
         Users.create(newUser, function (err, docs){
             if(err){
                 reject(err);
@@ -85,7 +84,6 @@ loginUser = (loginAttempt) => {
     return new Promise ((resolve, reject) => {
         Users.findOne({ email: loginAttempt.email }, function (err, docs) {
             if (err) {
-                console.log(loginAttempt)
                 reject(err);
             } else {
                 const success = bcrypt.compareSync(loginAttempt.password, docs.password);

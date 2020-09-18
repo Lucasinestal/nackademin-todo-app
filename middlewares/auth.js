@@ -20,7 +20,6 @@ auth =  async (req, res, next) =>  {
 }
 
 user = async (req, res, next) => {
-    console.log(req.user);
     if(req.user.role === "user" || req.user.role === "admin"){
          next();
     } else {
@@ -29,7 +28,6 @@ user = async (req, res, next) => {
 }
 
 admin = async (req, res, next) => {
-    console.log(req.user);
     if(req.user.role === "admin"){
          next();
     } else {
