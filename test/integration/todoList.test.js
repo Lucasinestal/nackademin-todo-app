@@ -40,9 +40,14 @@ describe("Todo List integrations test", () => {
         token = await User.loginUser({email:user.email, password:"testing"});
     })  
    it("Should create new todoList", async () => {
+    const user = await User.createUser({
+        email:"integrationstest@gmail.com",
+        password:"testing",
+        role:"admin"
+    });
         const todoList = {
             title: "Integrations test creating TodoList",
-            usersId: user._Id
+            usersId: user._id
         }
         const res = await request(app)
             .post("/todoLists/create")
@@ -69,5 +74,6 @@ describe("Todo List integrations test", () => {
         .send()
             expect(res.status).to.be.a("number")
             expect(res.body).to.be.a("object")
+            expect(res.status).to.be.equal(200);
         })
 })

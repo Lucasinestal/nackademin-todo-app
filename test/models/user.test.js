@@ -22,7 +22,7 @@ describe("Unit test for users", function(){
     it("Create new user", async () => {
         const createdUser = await User.createUser({email:"jala@ala.se", password: "hejsanhopsan", role: "user"})
         createdUser.should.be.a("object");
-       // createdUser.should.have.keys("_id","email","password","role");
+        createdUser.toObject().should.have.keys("__v", "_id","email","password","role");
     })
 
     it("login a user", async () => {
@@ -39,14 +39,14 @@ describe("Unit test for users", function(){
         const users = await User.getAll()
         users.should.be.a("array");
         users[0].should.have.property("email", "luc@test.se", "password", "hemligt");
-        //users.should.have.keys("0", "1", "2")
+        users.should.have.keys("0", "1", "2")
     })
 
     it("get user by ID", async () => {
         const createdUser = await User.createUser({email:"user@user.se", password: "hejsanhopsanfalleralera", role: "user"})
         const user = await User.getUserById(createdUser._id)
         user.should.be.a("object");
-       // user.should.have.keys("email","password","role","_id");
+        user.toObject().should.have.keys("__v", "email","password","role","_id");
     })
     it("update a user", async () => {
         const createdUser = await User.createUser({email:"admin@admin.se", password: "hejsanhopsanfalleralera", role: "admin"})
@@ -56,8 +56,8 @@ describe("Unit test for users", function(){
         }
         const updatedUser = await User.updateUser(createdUser._id, body);
         updatedUser.should.be.a("array");
-        //updatedUser.should.have.keys("0");
-       // updatedUser[0].should.have.property("email", "lol@lol.se")
+        updatedUser.should.have.keys("0");
+        updatedUser[0].should.have.property("email", "lol@lol.se")
     })
     
     it("delete a user", async () => {

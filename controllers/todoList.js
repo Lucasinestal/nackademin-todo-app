@@ -3,9 +3,9 @@ const user = require("../middlewares/auth");
 
 getAllTodosLists = async (req,res) => {
     const todoLists = await model.getAllTodosLists();
-    console.log(req.body)
-    res.send(todoLists);
-}
+    res.status(200).json(todoLists);
+    }
+
 
 getAllTodoListsById = async(req,res) => {
     const id = req.user.id;

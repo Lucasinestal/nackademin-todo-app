@@ -41,7 +41,7 @@ getItemById = (id) => {
             if (err) {
                 reject(err);
             } else {
-                resolve(docs);
+                resolve(docs.toObject());
             }
         })
     })
@@ -53,7 +53,7 @@ createItem = (newTodo) => {
             if(err){
                 reject(err);
             } else{
-                resolve(docs)
+                resolve(docs.toObject())
             }
         })
     })
@@ -66,7 +66,7 @@ updateItem = (id, body) => {
                 reject(err);
             } else {
                 db.find({ _id: id }, function (err, docs) {
-                    resolve(docs);
+                    resolve(docs.toObject());
                 });
             }
         })
@@ -104,7 +104,7 @@ checkItem = (id) => {
                 reject(err);
             } else{
                 Todo.findById({_id: id}, function (err, docs){
-                    resolve(docs);
+                    resolve(docs.toObject());
                 })
             }
         })
@@ -118,7 +118,7 @@ uncheckItem = (id) => {
                 reject(err);
             } else{
                 Todo.findById({_id: id}, function (err, docs){
-                    resolve(docs);
+                    resolve(docs.toObject());
                 })
             }
         })
